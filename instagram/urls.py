@@ -5,4 +5,7 @@ from rest_framework.routers import DefaultRouter
 router = DefaultRouter()
 router.register("post", views.PostViewSet)
 
-urlpatterns = [path("", include(router.urls))]
+urlpatterns = [
+    path("", include(router.urls)),
+    path("public/", views.PublicPostListAPIView.as_view()),
+]

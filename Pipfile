@@ -10,6 +10,7 @@ django = "*"
 flake8 = "*"
 black = "*"
 httpie = "*"
+ipykernel = "*"
 
 [requires]
 python_version = "3.8"
