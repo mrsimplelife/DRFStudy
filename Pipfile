@@ -9,6 +9,7 @@ django = "*"
 [dev-packages]
 flake8 = "*"
 black = "*"
+httpie = "*"
 
 [requires]
 python_version = "3.8"
