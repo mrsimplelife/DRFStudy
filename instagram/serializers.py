@@ -11,7 +11,7 @@ class AuthorSerializer(serializers.ModelSerializer):
 
 class PostSerializer(serializers.ModelSerializer):
     author_username = serializers.ReadOnlyField(source="author.username")
-    author = AuthorSerializer()
+    author = AuthorSerializer(read_only=True)
 
     class Meta:
         model = Post
@@ -22,4 +22,5 @@ class PostSerializer(serializers.ModelSerializer):
             "updated_at",
             "author",
             "author_username",
+            "is_public",
         ]
