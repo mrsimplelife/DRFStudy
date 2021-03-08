@@ -1,5 +1,3 @@
-from django.http import HttpRequest
-from instagram import serializers
 from instagram.serializers import PostSerializer
 from instagram.models import Post
 from rest_framework.viewsets import ModelViewSet
@@ -7,6 +5,8 @@ from rest_framework import generics
 from rest_framework.views import APIView
 from rest_framework.decorators import api_view, action
 from rest_framework.response import Response
+from rest_framework.renderers import TemplateHTMLRenderer
+from rest_framework.generics import RetrieveAPIView
 
 
 class PublicPostListCreateAPIView(generics.ListCreateAPIView):
@@ -25,7 +25,20 @@ class PublicPostListAPIView(APIView):
 # public_post_list = PublicPostListAPIView.as_view()
 
 
-@api_view()
+class PostDetailAPIView(RetrieveAPIView):
+    queryset = Post.objects.all()
+    renderer_classes = [TemplateHTMLRenderer]
+    template_name = "instagram/post_detail.html"
+
+    def get(self, request, *args, **kwargs):
+        post = self.get_object()
+        return Response({"post": post})  # PostSerializer(post).data,
+
+
+# http localhost:8000/public/ Accept:text/html
+@api_view(
+    # ["GET"]
+)
 def public_post_list(request):
     qs = Post.objects.filter(is_public=True)
     serializer = PostSerializer(qs, many=True)
