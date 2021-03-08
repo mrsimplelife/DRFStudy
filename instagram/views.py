@@ -9,6 +9,7 @@ from rest_framework.response import Response
 from rest_framework.renderers import TemplateHTMLRenderer
 from rest_framework.generics import RetrieveAPIView
 from rest_framework.permissions import IsAuthenticated
+from rest_framework.filters import SearchFilter, OrderingFilter
 
 
 class PublicPostListCreateAPIView(generics.ListCreateAPIView):
@@ -52,6 +53,8 @@ class PostViewSet(ModelViewSet):
     serializer_class = PostSerializer
     permission_classes = [IsAuthenticated, IsAuthorOrReadonly]
     # authentication_classes = []
+    search_fields = ["^message"]
+    filter_backends = [SearchFilter, OrderingFilter]
 
     @action(detail=False, methods=["GET"])
     def public(self, request):
