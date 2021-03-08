@@ -23,4 +23,9 @@ class PostSerializer(serializers.ModelSerializer):
             "author",
             "author_username",
             "is_public",
+            "ip",
         ]
+
+
+# serializer.is_valid(...)
+# serializer.save(author=request.user, ip=request.META['REMOTE_ADDR'])

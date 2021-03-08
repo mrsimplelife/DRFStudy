@@ -48,6 +48,7 @@ def public_post_list(request):
 class PostViewSet(ModelViewSet):
     queryset = Post.objects.all()
     serializer_class = PostSerializer
+    # authentication_classes = []
 
     @action(detail=False, methods=["GET"])
     def public(self, request):
@@ -63,3 +64,7 @@ class PostViewSet(ModelViewSet):
         instance.save(update_fields=["is_public"])
         serializer = self.get_serializer(instance)
         return Response(serializer.data)
+
+    def perform_create(self, serializer):
+        serializer.save(ip=self.request.META["REMOTE_ADDR"], author=self.request.user)
+        return super().perform_create(serializer)
