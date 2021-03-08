@@ -55,6 +55,7 @@ class PostViewSet(ModelViewSet):
     # authentication_classes = []
     search_fields = ["^message"]
     filter_backends = [SearchFilter, OrderingFilter]
+    
 
     @action(detail=False, methods=["GET"])
     def public(self, request):
