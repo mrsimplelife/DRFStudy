@@ -1,3 +1,4 @@
+from instagram.permissions import IsAuthorOrReadonly
 from instagram.serializers import PostSerializer
 from instagram.models import Post
 from rest_framework.viewsets import ModelViewSet
@@ -7,6 +8,7 @@ from rest_framework.decorators import api_view, action
 from rest_framework.response import Response
 from rest_framework.renderers import TemplateHTMLRenderer
 from rest_framework.generics import RetrieveAPIView
+from rest_framework.permissions import IsAuthenticated
 
 
 class PublicPostListCreateAPIView(generics.ListCreateAPIView):
@@ -48,6 +50,7 @@ def public_post_list(request):
 class PostViewSet(ModelViewSet):
     queryset = Post.objects.all()
     serializer_class = PostSerializer
+    permission_classes = [IsAuthenticated, IsAuthorOrReadonly]
     # authentication_classes = []
 
     @action(detail=False, methods=["GET"])
